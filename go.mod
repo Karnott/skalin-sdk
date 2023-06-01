@@ -1,4 +1,4 @@
-module github.com/karnott/mes-parcelles-sdk
+module github.com/karnott/skalin-sdk
 
 go 1.20
 
