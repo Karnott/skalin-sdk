@@ -25,6 +25,6 @@ func (s *skalin) SaveContact(contact Contact) (*Contact, error) {
 	return save(s, SAVE_CONTACT_PATH, contact)
 }
 
-func (s *skalin) GetContacts() ([]Contact, error) {
-	return getEntities[[]Contact](s, SAVE_CONTACT_PATH)
+func (s *skalin) GetContacts(params *GetParams) ([]Contact, error) {
+	return getEntities[[]Contact](s, SAVE_CONTACT_PATH, buildQueryParamsFromGetParams(params))
 }

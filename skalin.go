@@ -9,7 +9,7 @@ import (
 )
 
 type Skalin interface {
-	GetContacts() ([]Contact, error)
+	GetContacts(*GetParams) ([]Contact, error)
 	SaveContact(Contact) (*Contact, error)
 
 	SaveCustomer(Customer) (*Customer, error)

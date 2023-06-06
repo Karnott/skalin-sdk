@@ -10,7 +10,8 @@ import (
 	"github.com/stretchr/testify/mock"
 )
 
-var fakeContactsData = `[
+func TestGetContacts(t *testing.T) {
+	var fakeContactsData = `[
   {
     "id": "1",
 		"refId": "2",
@@ -18,13 +19,12 @@ var fakeContactsData = `[
 		"lastName": "Mon super nom de famille"
   }
   ]`
-var fakeContactsResponse = `
+	var fakeContactsResponse = `
 	{
 		"status":"success",
 		"data": ` + fakeContactsData + `
 	}`
 
-func TestGetContacts(t *testing.T) {
 	t.Run("OK", func(t *testing.T) {
 		mockApi := new(MockAPI)
 		expectedBody := []byte(fakeContactsResponse)
@@ -47,7 +47,7 @@ func TestGetContacts(t *testing.T) {
 		).Return(nil, expectedBody, nil)
 
 		skalinAPI := &skalin{api: mockApi}
-		contacts, err := skalinAPI.GetContacts()
+		contacts, err := skalinAPI.GetContacts(nil)
 		mockApi.AssertExpectations(t)
 		if !assert.NoError(t, err) || !assert.Equal(t, len(expectedContacts), len(contacts)) {
 			return
@@ -71,7 +71,7 @@ func TestGetContacts(t *testing.T) {
 		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
 
 		skalinAPI := &skalin{api: mockApi}
-		contacts, err := skalinAPI.GetContacts()
+		contacts, err := skalinAPI.GetContacts(nil)
 		mockApi.AssertExpectations(t)
 		if !assert.Error(t, err) {
 			return
@@ -87,7 +87,7 @@ func TestGetContacts(t *testing.T) {
 		if !assert.NoError(t, err) {
 			return
 		}
-		contacts, err := skalinApi.GetContacts()
+		contacts, err := skalinApi.GetContacts(nil)
 		if !assert.NoError(t, err) {
 			return
 		}
