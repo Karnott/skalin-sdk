@@ -142,3 +142,93 @@ func TestSaveCustomer(t *testing.T) {
 		assert.Equal(t, len(customer.Tags), len(customerSaved.Tags))
 	})
 }
+
+func TestGetCustomers(t *testing.T) {
+	var fakeCustomersData = `[
+  {
+    "id": "1",
+		"refId": "2",
+		"name": "Mon super nom", 
+		"stage": "Mon super stage"
+  }
+  ]`
+	var fakeCustomersResponse = `
+	{
+		"status":"success",
+		"data": ` + fakeCustomersData + `
+	}`
+
+	t.Run("OK", func(t *testing.T) {
+		mockApi := new(MockAPI)
+		expectedBody := []byte(fakeCustomersResponse)
+		_expectedCustomers := []byte(fakeCustomersData)
+		var expectedCustomers []Customer
+		err := json.Unmarshal(_expectedCustomers, &expectedCustomers)
+		if !assert.NoError(t, err) {
+			return
+		}
+
+		mockApi.On(
+			"send",
+			http.MethodGet,
+			BuildUrl(SAVE_CUSTOMER_PATH),
+			jsonContentType,
+			mock.Anything,
+			mock.Anything,
+			mock.Anything,
+			http.StatusOK,
+		).Return(nil, expectedBody, nil)
+
+		skalinAPI := &skalin{api: mockApi}
+		customers, err := skalinAPI.GetCustomers(nil)
+		mockApi.AssertExpectations(t)
+		if !assert.NoError(t, err) || !assert.Equal(t, len(expectedCustomers), len(customers)) {
+			return
+		}
+		expectedCustomer := expectedCustomers[0]
+		customer := customers[0]
+		assert.Equal(t, expectedCustomer.Id, customer.Id)
+	})
+
+	t.Run("With error", func(t *testing.T) {
+		mockApi := new(MockAPI)
+		mockApi.On(
+			"send",
+			http.MethodGet,
+			BuildUrl(SAVE_CUSTOMER_PATH),
+			jsonContentType,
+			mock.Anything,
+			mock.Anything,
+			mock.Anything,
+			http.StatusOK,
+		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
+
+		skalinAPI := &skalin{api: mockApi}
+		customers, err := skalinAPI.GetCustomers(nil)
+		mockApi.AssertExpectations(t)
+		if !assert.Error(t, err) {
+			return
+		}
+		assert.Nil(t, customers)
+	})
+
+	t.Run("Call API", func(t *testing.T) {
+		if GetSkalinAppClientID() == "" || GetSkalinClientApiID() == "" || GetSkalinClientApiSecret() == "" {
+			return
+		}
+		skalinApi, err := New(GetSkalinAppClientID(), GetSkalinClientApiID(), GetSkalinClientApiSecret())
+		if !assert.NoError(t, err) {
+			return
+		}
+		customers, err := skalinApi.GetCustomers(nil)
+		if !assert.NoError(t, err) {
+			return
+		}
+		if len(customers) == 0 {
+			return
+		}
+		for _, customer := range customers {
+			assert.NotEqual(t, "", customer.Id)
+		}
+	})
+}

@@ -56,3 +56,7 @@ const (
 func (s *skalin) SaveCustomer(customer Customer) (*Customer, error) {
 	return save(s, SAVE_CUSTOMER_PATH, customer)
 }
+
+func (s *skalin) GetCustomers(params *GetParams) ([]Customer, error) {
+	return getEntities[[]Customer](s, SAVE_CUSTOMER_PATH, buildQueryParamsFromGetParams(params))
+}
