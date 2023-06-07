@@ -9,14 +9,23 @@ import (
 )
 
 type Skalin interface {
-	GetContacts() ([]Contact, error)
+	GetContacts(*GetParams) ([]Contact, error)
 	SaveContact(Contact) (*Contact, error)
+	UpdateContact(Contact) (*Contact, error)
+	CreateContactForCustomer(Contact, string) (*Contact, error)
 
+	GetCustomers(*GetParams) ([]Customer, error)
 	SaveCustomer(Customer) (*Customer, error)
+
+	SetLogger(logger logrus.FieldLogger)
 }
 
 type skalin struct {
 	api API
+}
+
+func (s *skalin) SetLogger(logger logrus.FieldLogger) {
+	s.api.SetLogger(logger)
 }
 
 func New(clientId, clientApiId, clientApiSecret string) (Skalin, error) {
