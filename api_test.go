@@ -17,6 +17,9 @@ func GetSkalinAppClientID() string {
 func GetSkalinContactCustomAttributeForTest() string {
 	return os.Getenv("TEST_SKALIN_CONTACT_CUSTOM_ATTRIBUTE_ID")
 }
+func GetSkalinCustomerCustomAttributeForTest() string {
+	return os.Getenv("TEST_SKALIN_CUSTOMER_CUSTOM_ATTRIBUTE_ID")
+}
 func GetSkalinExistingCustomerRefIdForTest() string {
 	return os.Getenv("TEST_SKALIN_EXISTING_CUSTOMER_REF_ID")
 }

@@ -27,7 +27,7 @@ type CustomerResponse struct {
 func (c Customer) MarshalJSON() ([]byte, error) {
 	type Alias Customer // prevent stack overflow
 	if c.CustomAttributes == nil {
-		return json.Marshal(c)
+		return json.Marshal((Alias)(c))
 	}
 	customAttributes, err := json.Marshal(c.CustomAttributes)
 	if err != nil {
