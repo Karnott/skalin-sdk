@@ -17,6 +17,9 @@ func (m *MockAPI) PostData(url, contentType string, extraHeaders map[string][]st
 func (m *MockAPI) PutData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
 	return m.send(http.MethodPut, url, contentType, extraHeaders, body, queryParams, expectedStatusCode)
 }
+func (m *MockAPI) PatchData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
+	return m.send(http.MethodPatch, url, contentType, extraHeaders, body, queryParams, expectedStatusCode)
+}
 func (m *MockAPI) GetData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
 	return m.send(http.MethodGet, url, contentType, extraHeaders, body, queryParams, expectedStatusCode)
 }

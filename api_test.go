@@ -24,3 +24,7 @@ func GetSkalinExistingCustomerRefIdForTest() string {
 func GetSkalinExistingCustomerIdForTest() string {
 	return os.Getenv("TEST_SKALIN_EXISTING_CUSTOMER_ID")
 }
+
+func GetSkalinExistingContactIdForTest() string {
+	return os.Getenv("TEST_SKALIN_EXISTING_CONTACT_ID")
+}

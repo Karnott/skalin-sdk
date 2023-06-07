@@ -52,11 +52,21 @@ func (c Contact) MarshalJSON() ([]byte, error) {
 
 const (
 	SAVE_CONTACT_PATH            = "/contacts"
+	UPDATE_CONTACT_PATH          = "/contacts/%v"
 	CREATE_CUSTOMER_CONTACT_PATH = "/customers/%v/contacts"
 )
 
+// because in skalin API, many contact can have the same refId,
+// only the first match will be updated (if the refId already exists)
 func (s *skalin) SaveContact(contact Contact) (*Contact, error) {
 	return save(s, SAVE_CONTACT_PATH, contact)
+}
+
+func (s *skalin) UpdateContact(contact Contact) (*Contact, error) {
+	if contact.Id == "" {
+		return nil, fmt.Errorf("contact id is empty")
+	}
+	return update(s, fmt.Sprintf(UPDATE_CONTACT_PATH, contact.Id), contact)
 }
 
 func (s *skalin) GetContacts(params *GetParams) ([]Contact, error) {

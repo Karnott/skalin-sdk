@@ -15,6 +15,7 @@ import (
 type API interface {
 	PutData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error)
 	PostData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error)
+	PatchData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error)
 	GetData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error)
 	send(method, url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error)
 	WithToken(token string) API
@@ -131,6 +132,18 @@ func (a SkalinAPI) PostData(url, contentType string, extraHeaders map[string][]s
 func (a SkalinAPI) PutData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
 	return a.send(
 		http.MethodPut,
+		url,
+		contentType,
+		extraHeaders,
+		body,
+		queryParams,
+		expectedStatusCode,
+	)
+}
+
+func (a SkalinAPI) PatchData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
+	return a.send(
+		http.MethodPatch,
 		url,
 		contentType,
 		extraHeaders,
