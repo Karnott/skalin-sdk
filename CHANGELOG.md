@@ -1,5 +1,21 @@
 # Changelog
 
+## [1.1.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.0.0...v1.1.0) (2023-06-07)
+
+
+### Features
+
+* **contact:** consider params to filter contacts list ([64aa4bf](https://www.github.com/Karnott/skalin-sdk/commit/64aa4bf1203d3804f8ac7feb019515260dbf5c4d))
+* **contact:** create contact with customerId url + consider customAttributes ([73fe116](https://www.github.com/Karnott/skalin-sdk/commit/73fe116eb48641e87b04452e16492fdf2b2b6d55))
+* **contact:** create update func ([c3ffa11](https://www.github.com/Karnott/skalin-sdk/commit/c3ffa1115f973d6b6177b4ce9d667a16c9092aba))
+* **customer:** create getCustomers func ([b1456e7](https://www.github.com/Karnott/skalin-sdk/commit/b1456e720ce6413c9b3ff75a56918ea89dc1b54d))
+* **skalin:** add setter for logger ([a5ff6bf](https://www.github.com/Karnott/skalin-sdk/commit/a5ff6bf4c1f2b86fd870fbd3508c95274c1a7841))
+
+
+### Bug Fixes
+
+* **updateContact:** remove unmarshal response from update API request because skalin API only return 'status: success' response ([1c3e032](https://www.github.com/Karnott/skalin-sdk/commit/1c3e03246bba682127782c84bb01f5c80098bec6))
+
 ## 1.0.0 (2023-06-02)
 
 
