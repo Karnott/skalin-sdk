@@ -20,6 +20,7 @@ type API interface {
 	send(method, url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error)
 	WithToken(token string) API
 	GetLogger() *CustomLog
+	SetLogger(logrus.FieldLogger)
 }
 
 type SkalinAPI struct {
@@ -34,23 +35,23 @@ func (a *SkalinAPI) SetLogger(logger logrus.FieldLogger) {
 	}
 }
 
-func (a SkalinAPI) GetLogger() *CustomLog {
+func (a *SkalinAPI) GetLogger() *CustomLog {
 	if a.logger != nil {
 		return a.logger
 	}
 	return Log
 }
 
-func (a SkalinAPI) WithToken(token string) API {
+func (a *SkalinAPI) WithToken(token string) API {
 	a.token = &token
 	return a
 }
-func (a SkalinAPI) WithClientID(clientID string) API {
+func (a *SkalinAPI) WithClientID(clientID string) API {
 	a.clientID = &clientID
 	return a
 }
 
-func (a SkalinAPI) doRequest(method, queryUrl, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values) (*http.Response, error) {
+func (a *SkalinAPI) doRequest(method, queryUrl, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values) (*http.Response, error) {
 	var bodyReader io.Reader
 	if body != nil {
 		bodyReader = bytes.NewBuffer(body)
@@ -82,7 +83,7 @@ func (a SkalinAPI) doRequest(method, queryUrl, contentType string, extraHeaders 
 	return http.DefaultClient.Do(req)
 }
 
-func (a SkalinAPI) send(method, url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
+func (a *SkalinAPI) send(method, url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
 	logFields := logrus.Fields{
 		"method":             method,
 		"url":                url,

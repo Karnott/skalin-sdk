@@ -16,10 +16,16 @@ type Skalin interface {
 
 	GetCustomers(*GetParams) ([]Customer, error)
 	SaveCustomer(Customer) (*Customer, error)
+
+	SetLogger(logger logrus.FieldLogger)
 }
 
 type skalin struct {
 	api API
+}
+
+func (s *skalin) SetLogger(logger logrus.FieldLogger) {
+	s.api.SetLogger(logger)
 }
 
 func New(clientId, clientApiId, clientApiSecret string) (Skalin, error) {

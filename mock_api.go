@@ -4,6 +4,7 @@ import (
 	"net/http"
 	"net/url"
 
+	"github.com/sirupsen/logrus"
 	"github.com/stretchr/testify/mock"
 )
 
@@ -25,6 +26,8 @@ func (m *MockAPI) GetData(url, contentType string, extraHeaders map[string][]str
 }
 func (m *MockAPI) GetLogger() *CustomLog {
 	return Log
+}
+func (m *MockAPI) SetLogger(l logrus.FieldLogger) {
 }
 
 func (m *MockAPI) send(method, url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
