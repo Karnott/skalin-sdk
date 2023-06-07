@@ -74,13 +74,13 @@ func save[T Customer | Contact](s *skalin, path string, entity T) (*T, error) {
 	return &jsonResp.Data, nil
 }
 
-func update[T Customer | Contact](s *skalin, path string, entity T) (*T, error) {
+func update[T Customer | Contact](s *skalin, path string, entity T) error {
 	url := BuildUrl(path)
 	jsonEntity, err := json.Marshal(entity)
 	if err != nil {
-		return nil, err
+		return err
 	}
-	_, bodyResp, err := s.api.PatchData(
+	_, _, err = s.api.PatchData(
 		url,
 		jsonContentType,
 		nil,
@@ -89,15 +89,9 @@ func update[T Customer | Contact](s *skalin, path string, entity T) (*T, error) 
 		http.StatusOK,
 	)
 
-	if err != nil {
-		return nil, err
-	}
-	var jsonResp GenericResponse[T]
-	err = json.Unmarshal(bodyResp, &jsonResp)
-	if err != nil {
-		return nil, fmt.Errorf("error to unmarshal entity for update [%v] response: %w", path, err)
-	}
-	return &jsonResp.Data, nil
+	// no need to unmarshal response
+	// because it returns only `status: success`
+	return err
 }
 
 func getEntities[T []Customer | []Contact](s *skalin, path string, queryParams *url.Values) (T, error) {

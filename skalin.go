@@ -11,6 +11,7 @@ import (
 type Skalin interface {
 	GetContacts(*GetParams) ([]Contact, error)
 	SaveContact(Contact) (*Contact, error)
+	UpdateContact(Contact) (*Contact, error)
 	CreateContactForCustomer(Contact, string) (*Contact, error)
 
 	GetCustomers(*GetParams) ([]Customer, error)

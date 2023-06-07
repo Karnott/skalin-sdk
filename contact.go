@@ -66,7 +66,12 @@ func (s *skalin) UpdateContact(contact Contact) (*Contact, error) {
 	if contact.Id == "" {
 		return nil, fmt.Errorf("contact id is empty")
 	}
-	return update(s, fmt.Sprintf(UPDATE_CONTACT_PATH, contact.Id), contact)
+	// for now the API does not return the updated contact
+	err := update(s, fmt.Sprintf(UPDATE_CONTACT_PATH, contact.Id), contact)
+	if err != nil {
+		return nil, err
+	}
+	return &contact, nil
 }
 
 func (s *skalin) GetContacts(params *GetParams) ([]Contact, error) {

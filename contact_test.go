@@ -370,7 +370,6 @@ func TestUpdateContact(t *testing.T) {
 	var fakeContactResponse = `
 	{
 		"status":"success",
-		"data": ` + fakeContactData + `
 	}`
 
 	t.Run("OK", func(t *testing.T) {
@@ -461,7 +460,7 @@ func TestUpdateContact(t *testing.T) {
 				GetSkalinContactCustomAttributeForTest(): "Ceci est un test de l'API (attribut personnalisé 2)",
 			},
 		}
-		contactSaved, err := skalinApi.SaveContact(contact)
+		contactSaved, err := skalinApi.UpdateContact(contact)
 		if !assert.NoError(t, err) {
 			return
 		}
