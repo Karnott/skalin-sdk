@@ -51,7 +51,7 @@ func (a *SkalinAPI) WithClientID(clientID string) API {
 	return a
 }
 
-func (a *SkalinAPI) doRequest(method, queryUrl, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values) (*http.Response, error) {
+func (a SkalinAPI) doRequest(method, queryUrl, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values) (*http.Response, error) {
 	var bodyReader io.Reader
 	if body != nil {
 		bodyReader = bytes.NewBuffer(body)
@@ -83,7 +83,7 @@ func (a *SkalinAPI) doRequest(method, queryUrl, contentType string, extraHeaders
 	return http.DefaultClient.Do(req)
 }
 
-func (a *SkalinAPI) send(method, url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
+func (a SkalinAPI) send(method, url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
 	logFields := logrus.Fields{
 		"method":             method,
 		"url":                url,
@@ -198,7 +198,7 @@ func (a SkalinAPI) extractErrorMessage(body []byte) error {
 	var responseErr SkalinResponseError
 	err := json.Unmarshal(body, &responseErr)
 	if err != nil {
-		a.logger.Infof("error to unmarshal skalin response error: %v", err)
+		a.GetLogger().Infof("error to unmarshal skalin response error: %v", err)
 		return errors.New(string(body))
 	}
 	if responseErr.Message != "" {
