@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.1](https://www.github.com/Karnott/skalin-sdk/compare/v1.1.0...v1.1.1) (2023-06-08)
+
+
+### Bug Fixes
+
+* **logger:** define default logger in new func ([a2c6a5b](https://www.github.com/Karnott/skalin-sdk/commit/a2c6a5bab962c0103f5e8f38cec5e39bccfb19f0))
+
 ## [1.1.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.0.0...v1.1.0) (2023-06-07)
 
 
