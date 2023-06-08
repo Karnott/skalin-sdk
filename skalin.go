@@ -43,7 +43,10 @@ func New(clientId, clientApiId, clientApiSecret string) (Skalin, error) {
 	}
 
 	logrus.Infof("%s", data)
-	return &skalin{
+	skalin := &skalin{
 		api: skalinApi.WithClientID(clientId).WithToken(data["access_token"].(string)),
-	}, nil
+	}
+	// set default logger (but can be replace by another one)
+	skalin.SetLogger(Log)
+	return skalin, nil
 }
