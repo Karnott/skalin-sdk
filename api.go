@@ -8,6 +8,7 @@ import (
 	"io"
 	"net/http"
 	"net/url"
+	"strings"
 
 	"github.com/sirupsen/logrus"
 )
@@ -109,9 +110,13 @@ func (a SkalinAPI) send(method, url, contentType string, extraHeaders map[string
 	bodyResp, err := a.readResp(res, expectedStatusCode)
 	if err != nil {
 		if body != nil {
-			logFields["body"] = string(body)
+			if strings.Contains(string(body), "access_token") {
+				logFields["body"] = "body is not logged because it contains access_token"
+			} else {
+				logFields["body"] = string(body)
+			}
 		}
-		logFields["bodyResponse"] = string(body)
+		logFields["bodyResponse"] = string(bodyResp)
 		logFields["responseStatusCode"] = res.StatusCode
 		a.GetLogger().WithFields(logFields).Errorf("error to read response from skalin API: %v", err)
 	}
