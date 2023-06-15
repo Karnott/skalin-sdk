@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.1.2](https://www.github.com/Karnott/skalin-sdk/compare/v1.1.1...v1.1.2) (2023-06-15)
+
+
+### Bug Fixes
+
+* **api:** log body response error fix + do not log body if it contains access_token ([394467d](https://www.github.com/Karnott/skalin-sdk/commit/394467d2221c229780b92c14e6ce049104959f9a))
+
 ### [1.1.1](https://www.github.com/Karnott/skalin-sdk/compare/v1.1.0...v1.1.1) (2023-06-08)
 
 
