@@ -8,7 +8,7 @@ import (
 	"strings"
 )
 
-type GenericResponse[T Customer | Contact | []Customer | []Contact] struct {
+type GenericResponse[T Customer | Contact | Agreement | []Customer | []Contact | []Agreement] struct {
 	Status string `json:"status"`
 	Data   T      `json:"data"`
 }
@@ -48,7 +48,7 @@ func buildQueryParamsFromGetParams(params *GetParams) *url.Values {
 	return queryParams
 }
 
-func save[T Customer | Contact](s *skalin, path string, entity T) (*T, error) {
+func save[T Customer | Contact | Agreement](s *skalin, path string, entity T) (*T, error) {
 	url := BuildUrl(path)
 	jsonEntity, err := json.Marshal(entity)
 	if err != nil {
@@ -74,7 +74,7 @@ func save[T Customer | Contact](s *skalin, path string, entity T) (*T, error) {
 	return &jsonResp.Data, nil
 }
 
-func update[T Customer | Contact](s *skalin, path string, entity T) error {
+func update[T Customer | Contact | Agreement](s *skalin, path string, entity T) error {
 	url := BuildUrl(path)
 	jsonEntity, err := json.Marshal(entity)
 	if err != nil {
@@ -94,7 +94,7 @@ func update[T Customer | Contact](s *skalin, path string, entity T) error {
 	return err
 }
 
-func getEntities[T []Customer | []Contact](s *skalin, path string, queryParams *url.Values) (T, error) {
+func getEntities[T []Customer | []Contact | []Agreement](s *skalin, path string, queryParams *url.Values) (T, error) {
 	url := BuildUrl(path)
 	_, bodyResp, err := s.api.GetData(
 		url,
