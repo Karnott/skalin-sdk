@@ -17,6 +17,11 @@ type Skalin interface {
 	GetCustomers(*GetParams) ([]Customer, error)
 	SaveCustomer(Customer) (*Customer, error)
 
+	GetAgreements(*GetParams) ([]Agreement, error)
+	SaveAgreement(Agreement) (*Agreement, error)
+	UpdateAgreement(Agreement) (*Agreement, error)
+	CreateAgreementForCustomer(Agreement, string) (*Agreement, error)
+
 	SetLogger(logger logrus.FieldLogger)
 }
 
