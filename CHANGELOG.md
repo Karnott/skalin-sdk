@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.2.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.1.2...v1.2.0) (2023-06-19)
+
+
+### Features
+
+* **agreement:** create sdk func for agreement ([3f61bf2](https://www.github.com/Karnott/skalin-sdk/commit/3f61bf2fc9d824e5186af10abff1eac6f487a7c5))
+
 ### [1.1.2](https://www.github.com/Karnott/skalin-sdk/compare/v1.1.1...v1.1.2) (2023-06-15)
 
 
