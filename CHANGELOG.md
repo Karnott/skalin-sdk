@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.3.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.2.0...v1.3.0) (2023-06-21)
+
+
+### Features
+
+* **getData:** update generic getEntities func to get all data using metadata returning by skalin API ([dfbf5c4](https://www.github.com/Karnott/skalin-sdk/commit/dfbf5c4a220a02f3f2c7df206a57d33d73fcfbde))
+
 ## [1.2.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.1.2...v1.2.0) (2023-06-19)
 
 
