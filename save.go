@@ -5,12 +5,33 @@ import (
 	"fmt"
 	"net/http"
 	"net/url"
+	"strconv"
 	"strings"
 )
 
-type GenericResponse[T Customer | Contact | Agreement | []Customer | []Contact | []Agreement] struct {
-	Status string `json:"status"`
-	Data   T      `json:"data"`
+type EntitiesGeneric interface {
+	Customer | Contact | Agreement
+}
+
+type EntitySlice[T EntitiesGeneric] interface {
+	~[]T // permit to define a core type to use `make` and `append` on generic (https://go.dev/ref/spec#Core_types)
+}
+type ResponseMetadata interface {
+	PaginationMetadata
+}
+
+type PaginationMetadata struct {
+	Pagination struct {
+		Size  int `json:"size"`
+		Page  int `json:"page"`
+		Total int `json:"total"`
+	} `json:"pagination"`
+}
+
+type GenericResponse[T EntitySlice[V] | EntitiesGeneric, V EntitiesGeneric, U ResponseMetadata] struct {
+	Status   string `json:"status"`
+	Data     T      `json:"data"`
+	Metadata U      `json:"metadata,omitempty"`
 }
 
 type GetParams struct {
@@ -48,7 +69,7 @@ func buildQueryParamsFromGetParams(params *GetParams) *url.Values {
 	return queryParams
 }
 
-func save[T Customer | Contact | Agreement](s *skalin, path string, entity T) (*T, error) {
+func save[T EntitiesGeneric](s *skalin, path string, entity T) (*T, error) {
 	url := BuildUrl(path)
 	jsonEntity, err := json.Marshal(entity)
 	if err != nil {
@@ -66,7 +87,7 @@ func save[T Customer | Contact | Agreement](s *skalin, path string, entity T) (*
 	if err != nil {
 		return nil, err
 	}
-	var jsonResp GenericResponse[T]
+	var jsonResp GenericResponse[T, T, PaginationMetadata]
 	err = json.Unmarshal(bodyResp, &jsonResp)
 	if err != nil {
 		return nil, fmt.Errorf("error to unmarshal entity for save [%v] response: %w", path, err)
@@ -74,7 +95,7 @@ func save[T Customer | Contact | Agreement](s *skalin, path string, entity T) (*
 	return &jsonResp.Data, nil
 }
 
-func update[T Customer | Contact | Agreement](s *skalin, path string, entity T) error {
+func update[T EntitiesGeneric](s *skalin, path string, entity T) error {
 	url := BuildUrl(path)
 	jsonEntity, err := json.Marshal(entity)
 	if err != nil {
@@ -94,7 +115,7 @@ func update[T Customer | Contact | Agreement](s *skalin, path string, entity T) 
 	return err
 }
 
-func getEntities[T []Customer | []Contact | []Agreement](s *skalin, path string, queryParams *url.Values) (T, error) {
+func getEntitiesWithMetadata[T EntitySlice[V], V EntitiesGeneric, U PaginationMetadata](s *skalin, path string, queryParams *url.Values) (*GenericResponse[T, V, U], error) {
 	url := BuildUrl(path)
 	_, bodyResp, err := s.api.GetData(
 		url,
@@ -108,10 +129,32 @@ func getEntities[T []Customer | []Contact | []Agreement](s *skalin, path string,
 	if err != nil {
 		return nil, err
 	}
-	var jsonResp GenericResponse[T]
+	var jsonResp GenericResponse[T, V, U]
 	err = json.Unmarshal(bodyResp, &jsonResp)
 	if err != nil {
 		return nil, fmt.Errorf("error to unmarshal entity for get [%v] response: %w", path, err)
 	}
-	return jsonResp.Data, nil
+	return &jsonResp, nil
+}
+
+func getEntities[T EntitySlice[V], V EntitiesGeneric](s *skalin, path string, queryParams *url.Values) (T, error) {
+	isGetAll := false
+	data := make(T, 0)
+	if queryParams == nil {
+		queryParams = &url.Values{}
+	}
+	for !isGetAll {
+		jsonResp, err := getEntitiesWithMetadata[T](s, path, queryParams)
+		if err != nil {
+			return nil, err
+		}
+		data = append(data, jsonResp.Data...)
+		page := jsonResp.Metadata.Pagination.Page
+		queryParams.Set("page", strconv.Itoa(page+1))
+		// need to continue to get data until the total is reached
+		if len(data) >= jsonResp.Metadata.Pagination.Total {
+			isGetAll = true
+		}
+	}
+	return data, nil
 }
