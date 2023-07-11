@@ -58,11 +58,11 @@ const (
 
 // because in skalin API, many contact can have the same refId,
 // only the first match will be updated (if the refId already exists)
-func (s *skalin) SaveContact(contact Contact) (*Contact, error) {
+func (s *skalinAPI) SaveContact(contact Contact) (*Contact, error) {
 	return save(s, SAVE_CONTACT_PATH, contact)
 }
 
-func (s *skalin) UpdateContact(contact Contact) (*Contact, error) {
+func (s *skalinAPI) UpdateContact(contact Contact) (*Contact, error) {
 	if contact.Id == "" {
 		return nil, fmt.Errorf("contact id is empty")
 	}
@@ -74,10 +74,10 @@ func (s *skalin) UpdateContact(contact Contact) (*Contact, error) {
 	return &contact, nil
 }
 
-func (s *skalin) GetContacts(params *GetParams) ([]Contact, error) {
+func (s *skalinAPI) GetContacts(params *GetParams) ([]Contact, error) {
 	return getEntities[[]Contact](s, SAVE_CONTACT_PATH, buildQueryParamsFromGetParams(params))
 }
 
-func (s *skalin) CreateContactForCustomer(contact Contact, customerId string) (*Contact, error) {
+func (s *skalinAPI) CreateContactForCustomer(contact Contact, customerId string) (*Contact, error) {
 	return save(s, fmt.Sprintf(CREATE_CUSTOMER_CONTACT_PATH, customerId), contact)
 }

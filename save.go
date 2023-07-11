@@ -69,7 +69,7 @@ func buildQueryParamsFromGetParams(params *GetParams) *url.Values {
 	return queryParams
 }
 
-func save[T EntitiesGeneric](s *skalin, path string, entity T) (*T, error) {
+func save[T EntitiesGeneric](s *skalinAPI, path string, entity T) (*T, error) {
 	url := BuildUrl(path)
 	jsonEntity, err := json.Marshal(entity)
 	if err != nil {
@@ -95,7 +95,7 @@ func save[T EntitiesGeneric](s *skalin, path string, entity T) (*T, error) {
 	return &jsonResp.Data, nil
 }
 
-func update[T EntitiesGeneric](s *skalin, path string, entity T) error {
+func update[T EntitiesGeneric](s *skalinAPI, path string, entity T) error {
 	url := BuildUrl(path)
 	jsonEntity, err := json.Marshal(entity)
 	if err != nil {
@@ -115,7 +115,7 @@ func update[T EntitiesGeneric](s *skalin, path string, entity T) error {
 	return err
 }
 
-func getEntitiesWithMetadata[T EntitySlice[V], V EntitiesGeneric, U PaginationMetadata](s *skalin, path string, queryParams *url.Values) (*GenericResponse[T, V, U], error) {
+func getEntitiesWithMetadata[T EntitySlice[V], V EntitiesGeneric, U PaginationMetadata](s *skalinAPI, path string, queryParams *url.Values) (*GenericResponse[T, V, U], error) {
 	url := BuildUrl(path)
 	_, bodyResp, err := s.api.GetData(
 		url,
@@ -137,7 +137,7 @@ func getEntitiesWithMetadata[T EntitySlice[V], V EntitiesGeneric, U PaginationMe
 	return &jsonResp, nil
 }
 
-func getEntities[T EntitySlice[V], V EntitiesGeneric](s *skalin, path string, queryParams *url.Values) (T, error) {
+func getEntities[T EntitySlice[V], V EntitiesGeneric](s *skalinAPI, path string, queryParams *url.Values) (T, error) {
 	isGetAll := false
 	data := make(T, 0)
 	if queryParams == nil {

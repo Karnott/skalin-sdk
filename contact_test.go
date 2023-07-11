@@ -69,7 +69,7 @@ func TestGetContacts(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, expectedBody, nil)
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		contacts, err := skalinAPI.GetContacts(nil)
 		mockApi.AssertExpectations(t)
 		if !assert.NoError(t, err) || !assert.Equal(t, len(expectedContacts), len(contacts)) {
@@ -93,7 +93,7 @@ func TestGetContacts(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		contacts, err := skalinAPI.GetContacts(nil)
 		mockApi.AssertExpectations(t)
 		if !assert.Error(t, err) {
@@ -163,7 +163,7 @@ func TestSaveContact(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, expectedBody, nil)
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		contact, err := skalinAPI.SaveContact(expectedContact)
 		mockApi.AssertExpectations(t)
 		if !assert.NoError(t, err) {
@@ -197,7 +197,7 @@ func TestSaveContact(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		contact, err := skalinAPI.SaveContact(expectedContact)
 		if !assert.Error(t, err) {
 			return
@@ -281,7 +281,7 @@ func TestCreateContactForCustomer(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, expectedBody, nil)
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		contact, err := skalinAPI.CreateContactForCustomer(expectedContact, customerId)
 		mockApi.AssertExpectations(t)
 		if !assert.NoError(t, err) {
@@ -317,7 +317,7 @@ func TestCreateContactForCustomer(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		contact, err := skalinAPI.CreateContactForCustomer(expectedContact, customerId)
 		if !assert.Error(t, err) {
 			return
@@ -396,7 +396,7 @@ func TestUpdateContact(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, expectedBody, nil)
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		contact, err := skalinAPI.UpdateContact(expectedContact)
 		mockApi.AssertExpectations(t)
 		if !assert.NoError(t, err) {
@@ -430,7 +430,7 @@ func TestUpdateContact(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		contact, err := skalinAPI.UpdateContact(expectedContact)
 		if !assert.Error(t, err) {
 			return

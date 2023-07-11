@@ -6,9 +6,11 @@ import (
 )
 
 const (
-	SKALIN_API_URL  = "https://api.skalin.io/v1"
-	SKALIN_AUTH_URL = "https://auth.skalin.io/oauth/token"
-	jsonContentType = "application/json"
+	SKALIN_API_URL            = "https://api.skalin.io/v1"
+	SKALIN_AUTH_URL           = "https://auth.skalin.io/oauth/token"
+	SKALIN_HIT_URL            = "https://collect.skalin.io/hit"
+	jsonContentType           = "application/json"
+	formURLEncodedContentType = "application/x-www-form-urlencoded"
 )
 
 var (

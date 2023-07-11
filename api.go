@@ -21,6 +21,7 @@ type API interface {
 	send(method, url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error)
 	WithToken(token string) API
 	GetLogger() *CustomLog
+	GetClientID() *string
 	SetLogger(logrus.FieldLogger)
 }
 
@@ -41,6 +42,10 @@ func (a *SkalinAPI) GetLogger() *CustomLog {
 		return a.logger
 	}
 	return Log
+}
+
+func (a *SkalinAPI) GetClientID() *string {
+	return a.clientID
 }
 
 func (a *SkalinAPI) WithToken(token string) API {

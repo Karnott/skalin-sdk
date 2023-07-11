@@ -54,7 +54,7 @@ func TestGetAgreements(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, expectedBody, nil)
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		agreements, err := skalinAPI.GetAgreements(nil)
 		mockApi.AssertExpectations(t)
 		if !assert.NoError(t, err) || !assert.Equal(t, len(expectedAgreements), len(agreements)) {
@@ -78,7 +78,7 @@ func TestGetAgreements(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		agreements, err := skalinAPI.GetAgreements(nil)
 		mockApi.AssertExpectations(t)
 		if !assert.Error(t, err) {
@@ -153,7 +153,7 @@ func TestSaveAgreement(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, expectedBody, nil)
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		agreement, err := skalinAPI.SaveAgreement(expectedAgreement)
 		mockApi.AssertExpectations(t)
 		if !assert.NoError(t, err) {
@@ -193,7 +193,7 @@ func TestSaveAgreement(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		agreement, err := skalinAPI.SaveAgreement(expectedAgreement)
 		if !assert.Error(t, err) {
 			return
@@ -251,7 +251,7 @@ func TestCreateAgreementForCustomer(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, expectedBody, nil)
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		agreement, err := skalinAPI.CreateAgreementForCustomer(expectedAgreement, customerId)
 		mockApi.AssertExpectations(t)
 		if !assert.NoError(t, err) {
@@ -293,7 +293,7 @@ func TestCreateAgreementForCustomer(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		agreement, err := skalinAPI.CreateAgreementForCustomer(expectedAgreement, customerId)
 		if !assert.Error(t, err) {
 			return
@@ -346,7 +346,7 @@ func TestUpdateAgreement(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, expectedBody, nil)
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		agreement, err := skalinAPI.UpdateAgreement(expectedAgreement)
 		mockApi.AssertExpectations(t)
 		if !assert.NoError(t, err) {
@@ -380,7 +380,7 @@ func TestUpdateAgreement(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		agreement, err := skalinAPI.UpdateAgreement(expectedAgreement)
 		if !assert.Error(t, err) {
 			return

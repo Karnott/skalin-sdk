@@ -31,11 +31,11 @@ const (
 
 // because in skalin API, many agreement can have the same refId,
 // only the first match will be updated (if the refId already exists)
-func (s *skalin) SaveAgreement(agreement Agreement) (*Agreement, error) {
+func (s *skalinAPI) SaveAgreement(agreement Agreement) (*Agreement, error) {
 	return save(s, SAVE_AGREEMENT_PATH, agreement)
 }
 
-func (s *skalin) UpdateAgreement(agreement Agreement) (*Agreement, error) {
+func (s *skalinAPI) UpdateAgreement(agreement Agreement) (*Agreement, error) {
 	if agreement.Id == "" {
 		return nil, fmt.Errorf("agreement id is empty")
 	}
@@ -47,10 +47,10 @@ func (s *skalin) UpdateAgreement(agreement Agreement) (*Agreement, error) {
 	return &agreement, nil
 }
 
-func (s *skalin) GetAgreements(params *GetParams) ([]Agreement, error) {
+func (s *skalinAPI) GetAgreements(params *GetParams) ([]Agreement, error) {
 	return getEntities[[]Agreement](s, SAVE_AGREEMENT_PATH, buildQueryParamsFromGetParams(params))
 }
 
-func (s *skalin) CreateAgreementForCustomer(agreement Agreement, customerId string) (*Agreement, error) {
+func (s *skalinAPI) CreateAgreementForCustomer(agreement Agreement, customerId string) (*Agreement, error) {
 	return save(s, fmt.Sprintf(CREATE_CUSTOMER_AGREEMENT_PATH, customerId), agreement)
 }
