@@ -71,7 +71,7 @@ func TestSaveCustomer(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, expectedBody, nil)
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		customer, err := skalinAPI.SaveCustomer(expectedCustomer)
 		mockApi.AssertExpectations(t)
 		if !assert.NoError(t, err) {
@@ -106,7 +106,7 @@ func TestSaveCustomer(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		customer, err := skalinAPI.SaveCustomer(expectedCustomer)
 		if !assert.Error(t, err) {
 			return
@@ -179,7 +179,7 @@ func TestGetCustomers(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, expectedBody, nil)
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		customers, err := skalinAPI.GetCustomers(nil)
 		mockApi.AssertExpectations(t)
 		if !assert.NoError(t, err) || !assert.Equal(t, len(expectedCustomers), len(customers)) {
@@ -203,7 +203,7 @@ func TestGetCustomers(t *testing.T) {
 			http.StatusOK,
 		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
 
-		skalinAPI := &skalin{api: mockApi}
+		skalinAPI := &skalinAPI{api: mockApi}
 		customers, err := skalinAPI.GetCustomers(nil)
 		mockApi.AssertExpectations(t)
 		if !assert.Error(t, err) {

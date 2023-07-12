@@ -25,11 +25,19 @@ type Skalin interface {
 	SetLogger(logger logrus.FieldLogger)
 }
 
-type skalin struct {
+type SkalinTracking interface {
+	Hit(HitTrack) error
+}
+
+type skalinAPI struct {
 	api API
 }
 
-func (s *skalin) SetLogger(logger logrus.FieldLogger) {
+type skalinTracker struct {
+	api API
+}
+
+func (s *skalinAPI) SetLogger(logger logrus.FieldLogger) {
 	s.api.SetLogger(logger)
 }
 
@@ -48,10 +56,16 @@ func New(clientId, clientApiId, clientApiSecret string) (Skalin, error) {
 	}
 
 	logrus.Infof("%s", data)
-	skalin := &skalin{
+	skalin := &skalinAPI{
 		api: skalinApi.WithClientID(clientId).WithToken(data["access_token"].(string)),
 	}
 	// set default logger (but can be replace by another one)
 	skalin.SetLogger(Log)
 	return skalin, nil
+}
+
+func NewTracker(clientId string) (skalinTracker, error) {
+	skalinApi := new(SkalinAPI).WithClientID(clientId)
+	skalinApi.SetLogger(Log)
+	return skalinTracker{skalinApi}, nil
 }
