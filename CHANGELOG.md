@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.4.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.3.0...v1.4.0) (2023-07-12)
+
+
+### Features
+
+* add tracking endpoint ([e90ea45](https://www.github.com/Karnott/skalin-sdk/commit/e90ea45d083c6a8eb1e419144bc5b5cc2fb708d6))
+
 ## [1.3.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.2.0...v1.3.0) (2023-06-21)
 
 
