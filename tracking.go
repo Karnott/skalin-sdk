@@ -26,15 +26,16 @@ type HitEvent struct {
 }
 
 type HitTrack struct {
-	Action     HitAction   `validate:"required"`
-	VisitorID  string      `validate:"required,len=16"`
-	VisitID    string      `validate:"required,len=16"`
-	Identity   HitIdentity `validate:"required"`
-	Event      *HitEvent   `validate:"required_if=Action ev"` // mandatory if action is event
-	EventID    *string     `validate:"omitempty,len=16"`
-	CustomerID *string
-	Ts         *time.Time
-	URL        *string
+	Action        HitAction   `validate:"required"`
+	VisitorID     string      `validate:"required,len=16"`
+	VisitID       string      `validate:"required,len=16"`
+	Identity      HitIdentity `validate:"required"`
+	Event         *HitEvent   `validate:"required_if=Action ev"` // mandatory if action is event
+	EventID       *string     `validate:"omitempty,len=16"`
+	CustomerID    *string
+	Ts            *time.Time
+	URL           *string
+	CustomHeaders map[string][]string
 }
 
 func (a skalinTracker) Hit(ht HitTrack) (*http.Response, []byte, error) {
@@ -92,7 +93,7 @@ func (a skalinTracker) Hit(ht HitTrack) (*http.Response, []byte, error) {
 	return a.api.PostData(
 		SKALIN_HIT_URL,
 		formURLEncodedContentType,
-		nil,
+		ht.CustomHeaders,
 		nil,
 		&data,
 		http.StatusOK,
