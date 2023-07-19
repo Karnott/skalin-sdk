@@ -35,6 +35,7 @@ type HitTrack struct {
 	CustomerID    *string
 	Ts            *time.Time
 	URL           *string
+	CIP           *string // client ip
 	CustomHeaders map[string][]string
 }
 
@@ -88,6 +89,10 @@ func (a skalinTracker) Hit(ht HitTrack) (*http.Response, []byte, error) {
 		if ht.Action == HitActionEvent && ht.Ts != nil {
 			data.Set("ts", ht.Ts.UTC().Format("2006-01-02T15:04:05"))
 		}
+	}
+
+	if ht.CIP != nil {
+		data.Set("cip", *ht.CIP)
 	}
 
 	return a.api.PostData(
