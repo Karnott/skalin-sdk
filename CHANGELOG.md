@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.6.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.5.0...v1.6.0) (2023-07-19)
+
+
+### Features
+
+* **tracking:** add CIP in HitTrack struct ([b0ba4eb](https://www.github.com/Karnott/skalin-sdk/commit/b0ba4ebfcd7ad172d2aca320c4be809259660d5b))
+
 ## [1.5.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.4.0...v1.5.0) (2023-07-17)
 
 
