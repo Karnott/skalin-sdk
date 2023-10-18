@@ -22,6 +22,9 @@ type Skalin interface {
 	UpdateAgreement(Agreement) (*Agreement, error)
 	CreateAgreementForCustomer(Agreement, string) (*Agreement, error)
 
+	GetTags(*GetParams) ([]Tag, error)
+	GetTagByID(id string) (*Tag, error)
+
 	SetLogger(logger logrus.FieldLogger)
 }
 

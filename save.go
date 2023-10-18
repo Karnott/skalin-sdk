@@ -10,7 +10,7 @@ import (
 )
 
 type EntitiesGeneric interface {
-	Customer | Contact | Agreement
+	Customer | Contact | Agreement | Tag
 }
 
 type EntitySlice[T EntitiesGeneric] interface {
@@ -157,4 +157,26 @@ func getEntities[T EntitySlice[V], V EntitiesGeneric](s *skalinAPI, path string,
 		}
 	}
 	return data, nil
+}
+
+func getEntity[T Customer | Contact | Agreement | Tag](s *skalinAPI, path string, queryParams *url.Values) (*T, error) {
+	url := BuildUrl(path)
+	_, bodyResp, err := s.api.GetData(
+		url,
+		jsonContentType,
+		nil,
+		nil,
+		queryParams,
+		http.StatusOK,
+	)
+
+	if err != nil {
+		return nil, err
+	}
+	var jsonResp GenericResponse[T, T, PaginationMetadata]
+	err = json.Unmarshal(bodyResp, &jsonResp)
+	if err != nil {
+		return nil, fmt.Errorf("error to unmarshal entity for get [%v] response: %w", path, err)
+	}
+	return &jsonResp.Data, nil
 }
