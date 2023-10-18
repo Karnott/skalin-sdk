@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.7.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.6.0...v1.7.0) (2023-10-18)
+
+
+### Features
+
+* **tags:** create GetTags and GetTagByID func ([8038241](https://www.github.com/Karnott/skalin-sdk/commit/80382411857d03933e748228932a73fc5b178163))
+
 ## [1.6.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.5.0...v1.6.0) (2023-07-19)
 
 
