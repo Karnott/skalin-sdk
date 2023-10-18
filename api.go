@@ -18,6 +18,7 @@ type API interface {
 	PostData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error)
 	PatchData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error)
 	GetData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error)
+	DeleteData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error)
 	send(method, url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error)
 	WithToken(token string) API
 	GetLogger() *CustomLog
@@ -155,6 +156,18 @@ func (a SkalinAPI) PutData(url, contentType string, extraHeaders map[string][]st
 func (a SkalinAPI) PatchData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
 	return a.send(
 		http.MethodPatch,
+		url,
+		contentType,
+		extraHeaders,
+		body,
+		queryParams,
+		expectedStatusCode,
+	)
+}
+
+func (a SkalinAPI) DeleteData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
+	return a.send(
+		http.MethodDelete,
 		url,
 		contentType,
 		extraHeaders,
