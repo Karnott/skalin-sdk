@@ -3,6 +3,7 @@ package skalinsdk
 import (
 	"encoding/json"
 	"fmt"
+	"net/http"
 	"time"
 )
 
@@ -80,4 +81,17 @@ func (s *skalinAPI) GetContacts(params *GetParams) ([]Contact, error) {
 
 func (s *skalinAPI) CreateContactForCustomer(contact Contact, customerId string) (*Contact, error) {
 	return save(s, fmt.Sprintf(CREATE_CUSTOMER_CONTACT_PATH, customerId), contact)
+}
+
+func (s *skalinAPI) DeleteContact(contact Contact) error {
+	if contact.Id == "" {
+		return fmt.Errorf("contact id is empty")
+	}
+	// for now the API does not return the updated agreement
+	r, b, err := s.api.DeleteData(BuildUrl(fmt.Sprintf(UPDATE_CONTACT_PATH, contact.Id)), "", nil, nil, nil, http.StatusOK)
+	s.api.GetLogger().Infof("Delete contact %+v: %v", r, string(b))
+	if err != nil {
+		return err
+	}
+	return nil
 }

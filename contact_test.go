@@ -470,3 +470,56 @@ func TestUpdateContact(t *testing.T) {
 		assert.Equal(t, contact.Phone, contactSaved.Phone)
 	})
 }
+
+func TestDeleteContact(t *testing.T) {
+	var fakeAgreementResponse = `
+	{
+		"status":"success",
+	}`
+
+	t.Run("OK", func(t *testing.T) {
+		mockApi := new(MockAPI)
+		expectedBody := []byte(fakeAgreementResponse)
+
+		contactId := "1"
+		mockApi.On(
+			"send",
+			http.MethodDelete,
+			BuildUrl(fmt.Sprintf(UPDATE_CONTACT_PATH, contactId)),
+			"",
+			mock.Anything,
+			[]byte(nil),
+			mock.Anything,
+			http.StatusOK,
+		).Return(nil, expectedBody, nil)
+
+		skalinAPI := &skalinAPI{api: mockApi}
+		err := skalinAPI.DeleteContact(Contact{Id: contactId})
+		mockApi.AssertExpectations(t)
+		if !assert.NoError(t, err) {
+			return
+		}
+	})
+
+	t.Run("With error", func(t *testing.T) {
+		mockApi := new(MockAPI)
+
+		contactId := "1"
+		mockApi.On(
+			"send",
+			http.MethodDelete,
+			BuildUrl(fmt.Sprintf(UPDATE_CONTACT_PATH, contactId)),
+			"",
+			mock.Anything,
+			[]byte(nil),
+			mock.Anything,
+			http.StatusOK,
+		).Return(nil, nil, fmt.Errorf("Status code != %v: %v", http.StatusInternalServerError, http.StatusOK))
+
+		skalinAPI := &skalinAPI{api: mockApi}
+		err := skalinAPI.DeleteContact(Contact{Id: contactId})
+		if !assert.Error(t, err) {
+			return
+		}
+	})
+}
