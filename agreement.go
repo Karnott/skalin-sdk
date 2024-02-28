@@ -2,6 +2,7 @@ package skalinsdk
 
 import (
 	"fmt"
+	"net/http"
 )
 
 type Agreement struct {
@@ -53,4 +54,17 @@ func (s *skalinAPI) GetAgreements(params *GetParams) ([]Agreement, error) {
 
 func (s *skalinAPI) CreateAgreementForCustomer(agreement Agreement, customerId string) (*Agreement, error) {
 	return save(s, fmt.Sprintf(CREATE_CUSTOMER_AGREEMENT_PATH, customerId), agreement)
+}
+
+func (s *skalinAPI) DeleteAgreement(agreement Agreement) error {
+	if agreement.Id == "" {
+		return fmt.Errorf("agreement id is empty")
+	}
+	// for now the API does not return the updated agreement
+	r, b, err := s.api.DeleteData(BuildUrl(fmt.Sprintf(UPDATE_AGREEMENT_PATH, agreement.Id)), "", nil, nil, nil, http.StatusOK)
+	s.api.GetLogger().Infof("Delete agreement %+v: %v", r, string(b))
+	if err != nil {
+		return err
+	}
+	return nil
 }

@@ -21,6 +21,7 @@ type Skalin interface {
 	SaveAgreement(Agreement) (*Agreement, error)
 	UpdateAgreement(Agreement) (*Agreement, error)
 	CreateAgreementForCustomer(Agreement, string) (*Agreement, error)
+	DeleteAgreement(Agreement) error
 
 	GetTags(*GetParams) ([]Tag, error)
 	GetTagByID(id string) (*Tag, error)

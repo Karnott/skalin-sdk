@@ -28,6 +28,10 @@ func (m *MockAPI) GetClientID() *string {
 	n := "mock"
 	return &n
 }
+func (m *MockAPI) DeleteData(url, contentType string, extraHeaders map[string][]string, body []byte, queryParams *url.Values, expectedStatusCode int) (*http.Response, []byte, error) {
+	return m.send(http.MethodDelete, url, contentType, extraHeaders, body, queryParams, expectedStatusCode)
+}
+
 func (m *MockAPI) GetLogger() *CustomLog {
 	return Log
 }
