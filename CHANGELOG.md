@@ -1,5 +1,13 @@
 # Changelog
 
+## [1.8.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.7.0...v1.8.0) (2024-02-28)
+
+
+### Features
+
+* **agreement:** delete agreement ([5b2eddc](https://www.github.com/Karnott/skalin-sdk/commit/5b2eddc0d6279c272efc47a5e9c3466e799a328f))
+* **contact:** add DeleteContact func ([186bff7](https://www.github.com/Karnott/skalin-sdk/commit/186bff7bba284cf53286aee9c7861c51fc333301))
+
 ## [1.7.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.6.0...v1.7.0) (2023-10-18)
 
 
