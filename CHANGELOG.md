@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.8.1](https://www.github.com/Karnott/skalin-sdk/compare/v1.8.0...v1.8.1) (2024-02-28)
+
+
+### Bug Fixes
+
+* **skalin:** add DeleteContact func to the Skalin interface definition ([1119d17](https://www.github.com/Karnott/skalin-sdk/commit/1119d172ab5df1b6c6ebf41b7c20ea9fbff54d35))
+
 ## [1.8.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.7.0...v1.8.0) (2024-02-28)
 
 
