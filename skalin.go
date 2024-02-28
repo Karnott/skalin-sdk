@@ -13,6 +13,7 @@ type Skalin interface {
 	SaveContact(Contact) (*Contact, error)
 	UpdateContact(Contact) (*Contact, error)
 	CreateContactForCustomer(Contact, string) (*Contact, error)
+	DeleteContact(Contact) error
 
 	GetCustomers(*GetParams) ([]Customer, error)
 	SaveCustomer(Customer) (*Customer, error)
