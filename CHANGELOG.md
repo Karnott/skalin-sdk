@@ -1,5 +1,12 @@
 # Changelog
 
+### [1.8.2](https://www.github.com/Karnott/skalin-sdk/compare/v1.8.1...v1.8.2) (2024-03-27)
+
+
+### Bug Fixes
+
+* **getEntities:** use 'hasNextPage' attribute to get all entities ([d5ceca7](https://www.github.com/Karnott/skalin-sdk/commit/d5ceca7cffc227049e9f66961ceb57d0f8adf29e))
+
 ### [1.8.1](https://www.github.com/Karnott/skalin-sdk/compare/v1.8.0...v1.8.1) (2024-02-28)
 
 
