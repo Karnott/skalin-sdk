@@ -22,9 +22,10 @@ type ResponseMetadata interface {
 
 type PaginationMetadata struct {
 	Pagination struct {
-		Size  int `json:"size"`
-		Page  int `json:"page"`
-		Total int `json:"total"`
+		Size        int  `json:"size"`
+		Page        int  `json:"page"`
+		Total       int  `json:"total"`
+		HasNextPage bool `json:"hasNextPage"`
 	} `json:"pagination"`
 }
 
@@ -138,12 +139,11 @@ func getEntitiesWithMetadata[T EntitySlice[V], V EntitiesGeneric, U PaginationMe
 }
 
 func getEntities[T EntitySlice[V], V EntitiesGeneric](s *skalinAPI, path string, queryParams *url.Values) (T, error) {
-	isGetAll := false
 	data := make(T, 0)
 	if queryParams == nil {
 		queryParams = &url.Values{}
 	}
-	for !isGetAll {
+	for {
 		jsonResp, err := getEntitiesWithMetadata[T](s, path, queryParams)
 		if err != nil {
 			return nil, err
@@ -152,8 +152,8 @@ func getEntities[T EntitySlice[V], V EntitiesGeneric](s *skalinAPI, path string,
 		page := jsonResp.Metadata.Pagination.Page
 		queryParams.Set("page", strconv.Itoa(page+1))
 		// need to continue to get data until the total is reached
-		if len(data) >= jsonResp.Metadata.Pagination.Total {
-			isGetAll = true
+		if !jsonResp.Metadata.Pagination.HasNextPage {
+			break
 		}
 	}
 	return data, nil
