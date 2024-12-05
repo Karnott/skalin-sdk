@@ -18,6 +18,7 @@ type Contact struct {
 	FirstName        string           `json:"firstName,omitempty"`
 	LastName         string           `json:"lastName,omitempty"`
 	Phone            string           `json:"phone,omitempty"`
+	NpsScore         *int             `json:"npsScore,omitempty"`
 	Tags             []string         `json:"tags,omitempty"`
 	LastActivityTs   *time.Time       `json:"lastActivityTs,omitempty"`
 	CustomAttributes CustomAttributes `json:"-"`
