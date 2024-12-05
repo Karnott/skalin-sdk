@@ -1,5 +1,12 @@
 # Changelog
 
+## [1.9.0](https://www.github.com/Karnott/skalin-sdk/compare/v1.8.2...v1.9.0) (2024-12-05)
+
+
+### Features
+
+* **contact:** add npsScore attribute ([4f8b610](https://www.github.com/Karnott/skalin-sdk/commit/4f8b610dbf0db2911e3e85ace11003671d433b0b))
+
 ### [1.8.2](https://www.github.com/Karnott/skalin-sdk/compare/v1.8.1...v1.8.2) (2024-03-27)
 
 
